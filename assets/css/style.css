@@ -1,0 +1,69 @@
+/* ===== Full-screen moving trucking background ===== */
+
+body {
+  position: relative;
+  background: #08111f;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(rgba(5, 12, 22, 0.62), rgba(5, 12, 22, 0.72)),
+    url("/assets/images/truck-hero.jpg") center center / cover no-repeat;
+  transform: scale(1.08);
+  animation: slowTruckMotion 32s ease-in-out infinite alternate;
+  will-change: transform, background-position;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(77, 184, 255, 0.16), transparent 28%),
+    radial-gradient(circle at 80% 15%, rgba(143, 211, 255, 0.10), transparent 22%),
+    linear-gradient(to bottom, rgba(8, 17, 31, 0.18), rgba(8, 17, 31, 0.55));
+  pointer-events: none;
+}
+
+@keyframes slowTruckMotion {
+  0% {
+    transform: scale(1.08) translateX(0) translateY(0);
+    background-position: center center;
+  }
+  50% {
+    transform: scale(1.12) translateX(-1.2%) translateY(-0.8%);
+    background-position: center 48%;
+  }
+  100% {
+    transform: scale(1.1) translateX(1.2%) translateY(0.8%);
+    background-position: center 52%;
+  }
+}
+
+/* Optional: make sections feel like floating glass panels */
+.topbar,
+.hero-panel,
+.card,
+.contact-box,
+.stat,
+.trust-pill,
+.check-item,
+.panel-card,
+.contact-item {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Optional: slightly richer hero feel */
+.hero,
+.section,
+footer {
+  position: relative;
+  z-index: 1;
+}
