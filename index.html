@@ -1,140 +1,819 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>American EZ Truck Dispatch</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="American EZ Truck Dispatch helps owner-operators stay loaded with high-paying freight across the USA.">
-
+  <meta name="description" content="American EZ Truck Dispatch helps owner-operators and small fleets stay loaded with profitable freight through smart dispatch, rate negotiation, and reliable communication." />
   <style>
+    :root {
+      --bg: #08111f;
+      --bg-soft: #0d1a2d;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.1);
+      --text: #eef4ff;
+      --muted: #b9c7dc;
+      --line: rgba(255,255,255,0.12);
+      --accent: #4db8ff;
+      --accent-2: #8fd3ff;
+      --success: #29c77b;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(77,184,255,0.18), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(143,211,255,0.12), transparent 22%),
+        linear-gradient(180deg, #07101d 0%, #08111f 45%, #0a1524 100%);
+      color: var(--text);
+      line-height: 1.55;
     }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
     .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
     }
-    h1 {
-      font-size: 48px;
-      line-height: 1.2;
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 17, 31, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    p {
-      color: #cbd5f5;
-      font-size: 18px;
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 78px;
     }
-    .btn {
-      display: inline-block;
-      padding: 12px 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
     }
-    .primary {
-      background: #38bdf8;
-      color: #020617;
-    }
-    .secondary {
-      border: 1px solid #94a3b8;
-      color: white;
-    }
-    .section {
-      margin-top: 60px;
-    }
-    .grid {
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
       display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), #1d6fff);
+      color: #06111f;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(77,184,255,0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.97rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #66c8ff);
+      color: #06111f;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(77,184,255,0.28);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(77,184,255,0.12);
+      border: 1px solid rgba(77,184,255,0.18);
+      color: var(--accent-2);
+      font-size: 0.83rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      max-width: 720px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 0 0 26px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 16px;
+      font-weight: 800;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #80d4ff);
+      color: #06111f;
+      box-shadow: 0 14px 28px rgba(77,184,255,0.24);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-panel {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(77,184,255,0.18);
+      filter: blur(12px);
+    }
+
+    .mini-tag {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(41,199,123,0.14);
+      color: #8df5c1;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .panel-card {
+      margin-top: 16px;
+      background: rgba(7, 15, 27, 0.68);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .panel-card + .panel-card { margin-top: 14px; }
+
+    .section {
+      padding: 42px 0;
+    }
+
+    .section-head {
+      max-width: 720px;
+      margin-bottom: 22px;
+    }
+
+    .section-kicker {
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.12;
+      margin: 0 0 12px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin: 0;
+      font-size: 1.04rem;
+    }
+
+    .cards-3, .cards-4, .steps, .reviews {
+      display: grid;
+      gap: 18px;
+    }
+
+    .cards-3 { grid-template-columns: repeat(3, 1fr); }
+    .cards-4 { grid-template-columns: repeat(4, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+    .reviews { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(77,184,255,0.5), transparent 60%);
+    }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(77,184,255,0.14);
+      color: var(--accent-2);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .card h3 { margin: 0 0 10px; font-size: 1.2rem; }
+    .card p { margin: 0; color: var(--muted); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(41,199,123,0.18);
+      color: #92f3c6;
+      font-size: 0.9rem;
+      flex: 0 0 24px;
+    }
+
+    .step-number {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(77,184,255,0.15);
+      color: var(--accent-2);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .slider-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      min-height: 340px;
+    }
+
+    .slides {
+      display: flex;
+      width: 300%;
+      animation: slideShow 16s infinite;
+    }
+
+    .slide {
+      width: 100%;
+      min-height: 340px;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8,17,31,0.08) 0%, rgba(8,17,31,0.72) 74%, rgba(8,17,31,0.92) 100%);
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+    }
+
+    .slide h3 {
+      margin: 0 0 10px;
+      font-size: 1.75rem;
+    }
+
+    .slide p { margin: 0; color: #dbe8f8; }
+
+    .slide-1 {
+      background-image: linear-gradient(135deg, rgba(77,184,255,0.22), rgba(8,17,31,0.2)), url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    .slide-2 {
+      background-image: linear-gradient(135deg, rgba(77,184,255,0.14), rgba(8,17,31,0.22)), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    .slide-3 {
+      background-image: linear-gradient(135deg, rgba(77,184,255,0.12), rgba(8,17,31,0.2)), url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 20px;
     }
-    @media (min-width: 768px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
+
+    .contact-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      padding: 15px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .contact-item span {
+      display: block;
+      color: var(--accent-2);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(7,15,27,0.7);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 15px 16px;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+    input::placeholder, textarea::placeholder { color: #8fa1bc; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .trust-band {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .trust-pill {
+      text-align: center;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 34px 0 54px;
+      color: #97a7bf;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @keyframes slideShow {
+      0%, 28% { transform: translateX(0); }
+      33%, 61% { transform: translateX(-33.3333%); }
+      66%, 94% { transform: translateX(-66.6666%); }
+      100% { transform: translateX(0); }
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid, .split, .contact-grid, .cards-4 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .cards-3, .steps, .reviews, .trust-band {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 15px;
-    }
-    footer {
-      text-align: center;
-      padding: 40px;
-      color: #94a3b8;
+
+    @media (max-width: 820px) {
+      .nav { flex-wrap: wrap; padding: 14px 0; }
+      .nav-links { width: 100%; justify-content: center; }
+      .hero-grid, .split, .contact-grid, .cards-3, .cards-4, .steps, .reviews, .trust-band, .form-row, .hero-stats {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding-top: 46px; }
+      .slide { min-height: 280px; padding: 24px; }
+      .slider-shell { min-height: 280px; }
     }
   </style>
-
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home">
+        <span class="brand-mark">EZ</span>
+        <span>American EZ Truck Dispatch</span>
+      </a>
 
-<div class="container">
-  <h1>American EZ Truck Dispatch</h1>
-  <p><strong>Keep Your Truck Moving. We Handle the Rest.</strong></p>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-  <p>
-    We help owner-operators and small fleets stay loaded with profitable freight,
-    negotiate better rates, and manage broker communication across the United States.
-  </p>
+      <a class="nav-cta" href="#contact">Get Started</a>
+    </div>
+  </header>
 
-<a href="#contact" class="btn primary">Get Dispatch Support</a> <a href="#services" class="btn secondary">Our Services</a>
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Reliable Dispatch for Owner-Operators & Small Fleets</span>
+          <h1>Keep Your Truck Moving. We Handle the Rest.</h1>
+          <p class="lead">
+            American EZ Truck Dispatch helps carriers stay loaded with profitable freight, stronger rate negotiation, and dependable broker communication across the United States.
+          </p>
 
-  <div class="section" id="services">
-    <h2>Our Services</h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Request Dispatch Support</a>
+            <a class="btn btn-secondary" href="#services">Explore Services</a>
+          </div>
 
-```
-<div class="grid grid-3">
-  <div class="card">
-    <h3>Load Booking</h3>
-    <p>We find and secure profitable loads that match your route and preferences.</p>
-  </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>No Forced</strong>
+              Transparent dispatching with clear load approval.
+            </div>
+            <div class="stat">
+              <strong>Fast Updates</strong>
+              Responsive communication with brokers and drivers.
+            </div>
+            <div class="stat">
+              <strong>Better Loads</strong>
+              Smart lane planning and stronger rate negotiation.
+            </div>
+          </div>
+        </div>
 
-  <div class="card">
-    <h3>Rate Negotiation</h3>
-    <p>We negotiate with brokers to get you the highest paying freight possible.</p>
-  </div>
+        <div class="hero-panel">
+          <span class="mini-tag">Built for growth</span>
+          <div class="panel-card">
+            <h3>Dispatch that feels organized, premium, and dependable</h3>
+            <p>We focus on the details that matter: load sourcing, rate confirmations, broker communication, route planning, and support that keeps your operation moving smoothly.</p>
+          </div>
+          <div class="panel-card">
+            <h3>Designed to win trust fast</h3>
+            <p>Clear communication and professional presentation matter. This site is built to help drivers feel they are dealing with a real operation from the first click.</p>
+          </div>
+          <div class="panel-card">
+            <h3>Easy next step for every visitor</h3>
+            <p>Phone, WhatsApp, email, or lead form — every section moves drivers naturally toward contacting you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="card">
-    <h3>Route Planning</h3>
-    <p>Reduce deadhead miles and keep your truck moving efficiently.</p>
-  </div>
-</div>
-```
+    <section class="section">
+      <div class="container split">
+        <div class="slider-shell">
+          <div class="slides">
+            <article class="slide slide-1">
+              <div class="slide-content">
+                <h3>Professional dispatch support across the U.S.</h3>
+                <p>Present your company with confidence through a dynamic hero slider that adds movement without looking noisy.</p>
+              </div>
+            </article>
+            <article class="slide slide-2">
+              <div class="slide-content">
+                <h3>Built to feel clean, sharp, and trustworthy</h3>
+                <p>Modern sections, polished cards, and smooth navigation help visitors explore your services with ease.</p>
+              </div>
+            </article>
+            <article class="slide slide-3">
+              <div class="slide-content">
+                <h3>Focused on real conversion</h3>
+                <p>Your calls to action stay visible and clear, making it easier to turn site visitors into actual dispatch leads.</p>
+              </div>
+            </article>
+          </div>
+        </div>
 
-  </div>
+        <div class="card" id="why-us">
+          <div class="section-kicker">Why choose us</div>
+          <h2>Easy navigation. Premium feel. Strong first impression.</h2>
+          <p class="section-desc">This layout gives your dispatch business a more serious and established look while staying simple enough to load fast and perform well.</p>
 
-  <div class="section">
-    <h2>Why Choose Us</h2>
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div><strong>Elegant without feeling heavy</strong><br><span style="color:var(--muted);">Smooth sections, rich cards, and a polished dark-blue visual identity.</span></div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Navigation that feels effortless</strong><br><span style="color:var(--muted);">Visitors can jump straight to services, trust points, reviews, and contact.</span></div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Built for credibility</strong><br><span style="color:var(--muted);">The structure speaks to owner-operators looking for clear help and reliable communication.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-```
-<div class="grid grid-3">
-  <div class="card">No forced dispatch</div>
-  <div class="card">5–7% transparent pricing</div>
-  <div class="card">Fast communication</div>
-</div>
-```
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Services</div>
+          <h2>What American EZ Truck Dispatch handles for your trucking business</h2>
+          <p class="section-desc">Clean service windows make the page easier to read, more attractive, and more persuasive for new drivers and small fleets.</p>
+        </div>
 
-  </div>
+        <div class="cards-4">
+          <article class="card">
+            <div class="icon-box">01</div>
+            <h3>Load Booking</h3>
+            <p>We search and secure loads that align with your trailer type, schedule, and preferred lanes.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">02</div>
+            <h3>Rate Negotiation</h3>
+            <p>We push for stronger rates so your truck stays productive and each load works harder for your business.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">03</div>
+            <h3>Route Planning</h3>
+            <p>Smarter route decisions help reduce deadhead miles, improve timing, and keep your operation moving.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">04</div>
+            <h3>Broker Communication</h3>
+            <p>We manage updates, confirmations, and coordination so drivers can stay focused on the road.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <div class="section" id="contact">
-    <h2>Contact Us</h2>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Trust points</div>
+          <h2>Simple advantages that matter to real carriers</h2>
+          <p class="section-desc">These support points are presented as quick trust windows so visitors grasp the value immediately.</p>
+        </div>
 
-```
-<p>Phone: (Your Number Here)</p>
-<p>Email: dispatch@americanez-truckdispatch.com</p>
+        <div class="trust-band">
+          <div class="trust-pill">No Forced Dispatch</div>
+          <div class="trust-pill">Transparent Pricing</div>
+          <div class="trust-pill">Fast Communication</div>
+          <div class="trust-pill">Owner-Operator Focused</div>
+        </div>
+      </div>
+    </section>
 
-<a href="https://wa.me/1YOURNUMBER" class="btn primary">Chat on WhatsApp</a>
-```
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">How it works</div>
+          <h2>A clear process that feels easy from the first call</h2>
+          <p class="section-desc">This section makes the workflow easy to understand, which helps reduce hesitation and increases trust.</p>
+        </div>
 
-  </div>
-</div>
+        <div class="steps">
+          <article class="card">
+            <span class="step-number">1</span>
+            <h3>Tell us about your truck</h3>
+            <p>Share your trailer type, current location, preferred lanes, and target rates so we can dispatch around your goals.</p>
+          </article>
+          <article class="card">
+            <span class="step-number">2</span>
+            <h3>We find and negotiate loads</h3>
+            <p>We search, evaluate, and communicate with brokers before bringing you the right opportunities.</p>
+          </article>
+          <article class="card">
+            <span class="step-number">3</span>
+            <h3>You approve and hit the road</h3>
+            <p>Once you approve the load, we coordinate the details and keep communication flowing until delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<footer>
-  © 2026 American EZ Truck Dispatch — All Rights Reserved
-</footer>
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Driver confidence</div>
+          <h2>Add testimonials here to increase trust even more</h2>
+          <p class="section-desc">You can replace these with real reviews later. For now, they help shape the site like a polished, complete business.</p>
+        </div>
 
+        <div class="reviews">
+          <article class="card">
+            <h3>“Professional and responsive.”</h3>
+            <p>They kept communication clear and made the process feel smooth from the start.</p>
+          </article>
+          <article class="card">
+            <h3>“Easy to work with.”</h3>
+            <p>The load details were explained clearly, and I always knew what was happening next.</p>
+          </article>
+          <article class="card">
+            <h3>“A serious dispatch operation.”</h3>
+            <p>The presentation, follow-up, and speed gave me confidence right away.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-box">
+          <div class="section-kicker">Contact</div>
+          <h2>Ready to keep your truck loaded and profitable?</h2>
+          <p class="section-desc">Place your real business details below so drivers can call, email, or message you instantly.</p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <span>Phone</span>
+              (Your business phone here)
+            </div>
+            <div class="contact-item">
+              <span>Email</span>
+              dispatch@americanez-truckdispatch.com
+            </div>
+            <div class="contact-item">
+              <span>WhatsApp</span>
+              https://wa.me/1YOURNUMBER
+            </div>
+            <div class="contact-item">
+              <span>Service area</span>
+              U.S. owner-operators and small fleets
+            </div>
+          </div>
+
+          <div class="hero-actions" style="margin-top:22px; margin-bottom:0;">
+            <a class="btn btn-primary" href="mailto:dispatch@americanez-truckdispatch.com">Email Us</a>
+            <a class="btn btn-secondary" href="https://wa.me/1YOURNUMBER">Chat on WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <div class="section-kicker">Quick inquiry</div>
+          <h2>Driver contact form</h2>
+          <p class="section-desc">You can later connect this form to Formspree, Basin, Tally, or Google Forms for real submissions.</p>
+
+          <form>
+            <div class="form-row">
+              <input type="text" placeholder="Full name" />
+              <input type="text" placeholder="Phone number" />
+            </div>
+            <div class="form-row">
+              <input type="email" placeholder="Email address" />
+              <select>
+                <option>Trailer type</option>
+                <option>Dry Van</option>
+                <option>Flatbed</option>
+                <option>Reefer</option>
+                <option>Hotshot</option>
+              </select>
+            </div>
+            <textarea placeholder="Tell us your current lane, preferred routes, or dispatch needs"></textarea>
+            <button class="btn btn-primary" type="submit">Submit Request</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 American EZ Truck Dispatch · Professional dispatch support for owner-operators and small fleets.
+  </footer>
 </body>
 </html>
