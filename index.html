@@ -791,24 +791,34 @@
           <h2>Driver contact form</h2>
           <p class="section-desc">You can later connect this form to Formspree, Basin, Tally, or Google Forms for real submissions.</p>
 
-          <form>
-            <div class="form-row">
-              <input type="text" placeholder="Full name" />
-              <input type="text" placeholder="Phone number" />
-            </div>
-            <div class="form-row">
-              <input type="email" placeholder="Email address" />
-              <select>
-                <option>Trailer type</option>
-                <option>Dry Van</option>
-                <option>Flatbed</option>
-                <option>Reefer</option>
-                <option>Hotshot</option>
-              </select>
-            </div>
-            <textarea placeholder="Tell us your current lane, preferred routes, or dispatch needs"></textarea>
-            <button class="btn btn-primary" type="submit">Submit Request</button>
-          </form>
+          <form action="https://formspree.io/f/xvzvldwe" method="POST">
+
+  <div class="form-row">
+    <input type="text" name="name" placeholder="Full name" required />
+    <input type="text" name="phone" placeholder="Phone number" required />
+  </div>
+
+  <div class="form-row">
+    <input type="email" name="email" placeholder="Email address" required />
+    
+    <select name="equipment">
+      <option value="">Trailer type</option>
+      <option>Dry Van</option>
+      <option>Flatbed</option>
+      <option>Reefer</option>
+      <option>Box Truck</option>
+    </select>
+  </div>
+
+  <textarea name="message" placeholder="Tell us about your lanes or needs"></textarea>
+
+  <!-- hidden enhancements -->
+  <input type="hidden" name="_subject" value="New Dispatch Lead">
+  <input type="hidden" name="_captcha" value="false">
+
+  <button type="submit">Get Dispatch Now</button>
+
+</form>
         </div>
       </div>
     </section>
