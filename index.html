@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American EZ Truck Dispatch — Coming Soon</title>
+  <meta name="description" content="American EZ Truck Dispatch is launching soon." />
+  <style>
+    :root{
+      --bg:#08111f;
+      --bg2:#0d1a2d;
+      --accent:#4db8ff;
+      --accent2:#8fd3ff;
+      --text:#eef4ff;
+      --muted:#b9c7dc;
+      --line:rgba(255,255,255,0.12);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      font-family:Inter, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(77,184,255,0.18), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(143,211,255,0.12), transparent 22%),
+        linear-gradient(180deg, #07101d 0%, #08111f 50%, #0a1524 100%);
+      overflow:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(rgba(5,12,22,0.62), rgba(5,12,22,0.72)),
+        url("/assets/images/truck-hero.jpg") center center / cover no-repeat;
+      opacity:.22;
+      transform:scale(1.06);
+      animation:slowMove 28s ease-in-out infinite alternate;
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(8,17,31,.28), rgba(8,17,31,.58));
+      z-index:-1;
+    }
+
+    @keyframes slowMove{
+      0%{transform:scale(1.06) translateX(0) translateY(0)}
+      100%{transform:scale(1.11) translateX(1.2%) translateY(.8%)}
+    }
+
+    .card{
+      width:min(760px, 100%);
+      background:rgba(255,255,255,0.06);
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:44px 32px;
+      text-align:center;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 24px 60px rgba(0,0,0,.35);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(77,184,255,0.12);
+      border:1px solid rgba(77,184,255,0.2);
+      color:var(--accent2);
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:20px;
+    }
+
+    .logo{
+      width:62px;
+      height:62px;
+      margin:0 auto 18px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:1.15rem;
+      color:#06111f;
+      background:linear-gradient(135deg, var(--accent), #1d6fff);
+      box-shadow:0 12px 28px rgba(77,184,255,.32);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(2.3rem, 6vw, 4.4rem);
+      line-height:1.03;
+      letter-spacing:-.03em;
+    }
+
+    h1 span{
+      color:var(--accent2);
+    }
+
+    p{
+      margin:0 auto;
+      max-width:620px;
+      color:var(--muted);
+      font-size:1.06rem;
+      line-height:1.7;
+    }
+
+    .brand{
+      margin-top:22px;
+      font-size:1.15rem;
+      font-weight:800;
+      color:var(--text);
+    }
+
+    .sub{
+      margin-top:8px;
+      font-size:.98rem;
+      color:var(--muted);
+    }
+
+    .line{
+      width:120px;
+      height:3px;
+      margin:26px auto 0;
+      border-radius:999px;
+      background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    @media (max-width:640px){
+      .card{padding:34px 22px}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">EZ</div>
+    <div class="badge">New site in progress</div>
+
+    <h1>Coming <span>Soon</span></h1>
+
+    <p>
+      We’re preparing a strong new experience for <strong>American EZ Truck Dispatch</strong>.
+      Reliable dispatch support, cleaner navigation, and a more premium presentation are on the way.
+    </p>
+
+    <div class="brand">American EZ Truck Dispatch</div>
+    <div class="sub">Professional dispatch support for owner-operators and small fleets</div>
+
+    <div class="line"></div>
+  </div>
+</body>
+</html>
